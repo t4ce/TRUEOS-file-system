@@ -115,6 +115,25 @@ Convenience methods are also available:
 
 For a complete program, see `cargo run --example rust_api`.
 
+## Tile Debug Style Object
+
+The image-derived tile debug frame is also available as a Rust style object.
+
+```rust
+use file_system::TRUEOS_TILE_DEBUG_FRAME_0;
+
+fn main() {
+    let frame = TRUEOS_TILE_DEBUG_FRAME_0;
+    let cell = frame.cell(5, 5).unwrap();
+
+    assert_eq!(cell.label(), "R5C5");
+    println!("{}", cell.fill.to_hex_rgb());
+    println!("{}", frame.to_css_custom_properties("trueos-tile"));
+}
+```
+
+This object is based on the 12x6 debug image under `docs/image.png`. For a runnable example, use `cargo run --example tile_debug_style`.
+
 ## Routes
 
 | Method | Path | Handler |
@@ -144,11 +163,13 @@ TRUEOS-file-system/
 │   └── ui.css     # Shared CSS tokens and component styles
 ├── Cargo.toml
 ├── examples/
-│   └── rust_api.rs # Programmatic Rust API example
+│   ├── rust_api.rs # Programmatic Rust API example
+│   └── tile_debug_style.rs # Tile debug style and CSS export example
 ├── src/
 │   ├── lib.rs      # Public Rust API exports
 │   ├── main.rs    # Server setup, routing, HTTP handlers
 │   ├── jobs.rs    # Asynchronous file operation queue and worker
+│   ├── tile_debug_style.rs # Image-derived Rust style objects and palette
 │   ├── tree.rs    # Directory scanning, path encoding, traversal checks
 │   └── html.rs    # HTML page rendering for tree and job pages
 └── example/       # Sample files for local testing
